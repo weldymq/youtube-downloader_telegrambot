@@ -13,14 +13,14 @@ load_dotenv()
 
 TOKEN = os.getenv("BOT_TOKEN")
 PROXY = os.getenv("PROXY")
-MAX_SIZE = 50 * 1024 * 1024  # лимит Telegram на отправку файла
+MAX_SIZE = 50 * 1024 * 1024
 
 logging.basicConfig(level=logging.INFO)
 dp = Dispatcher()
 
 
 def probe_size(path: str) -> tuple[int | None, int | None]:
-    """Читает реальные размеры кадра из готового файла через ffprobe."""
+
     try:
         result = subprocess.run(
             ["ffprobe", "-v", "error", "-select_streams", "v:0",
@@ -35,7 +35,7 @@ def probe_size(path: str) -> tuple[int | None, int | None]:
 
 
 def download(url: str) -> dict:
-    """Скачивает видео и возвращает путь к файлу вместе с метаданными."""
+
     options = {
         "format": (
             f"bestvideo[height<=720][vcodec^=avc1][filesize<{MAX_SIZE}]"
